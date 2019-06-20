@@ -1,13 +1,14 @@
 import React from 'react'
-//import TodoList from './TodoList'
-import ListItem from './ListItem'
-import articles from '../users'
+import TodoList from './TodoList'
+import listItems from '../users'
+
+import styles from './App.scss';
 
 function App() {
   return(
-    <div>
-      <h1>App Name</h1>
-      <ListItem article = {articles[0]} />
+    <div style={styles.myHeader}>
+      <h1>To do list</h1>
+      <TodoList listItems={listItems} />
     </div>
   )
 }
