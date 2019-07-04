@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import './style.scss';
+
 
 export default class InputForm extends Component {
   constructor(props) {
@@ -20,8 +22,8 @@ export default class InputForm extends Component {
 
     return (
       <form  className="form-inline">
-        <input type="text" value={value} onChange={this.handleChange} />
-        <button type="button" onClick={() => onAdd(value)}>Add</button>
+        <input className="list__input" type="text" value={value} onChange={this.handleChange} />
+        <button className="btn btn_blue btn_sm" type="button" onClick={() => onAdd(value)}>Add</button>
       </form>
     )
   }

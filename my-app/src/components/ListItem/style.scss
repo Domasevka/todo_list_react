@@ -2,18 +2,6 @@
   margin-bottom: 1em;
   padding-left: 0;
 
-
-  &__input {
-    display: inline-block;
-    width: calc(100% - 8.7rem);
-    height: 4rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 4px;
-    padding: 0 1rem;
-    margin-right: 1rem;
-    margin-bottom: 2rem;
-  }
-
   &__item {
     display: flex;
     justify-content: flex-end;
@@ -22,6 +10,13 @@
     border-radius: 4px;
     padding: 0.5rem;
   }
+
+  &__item.complete {
+    & .list__text{
+      text-decoration: line-through;
+    }
+  }
+
   &__item + &__item {
     margin-top: 0.5rem;
   }
@@ -34,6 +29,7 @@
     display: inline-block;
     margin-right: auto;
     min-width: 17rem;
+    padding-left: 1.5rem;
   }
 
   &__time {
@@ -50,6 +46,16 @@
     max-width: 13rem;
     min-width: 12rem;
     padding: 0 0.5rem;
+  }
+
+  &__check {
+    border: solid black;
+    border-width: 0 0.2rem 0.2rem 0;
+    display: inline-block;
+    padding: 0.2rem;
+    height: 10px;
+    transform: rotate(45deg);
+    margin-left: 0.8rem;
   }
 }
 

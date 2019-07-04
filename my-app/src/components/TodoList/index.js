@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
+//import listItems from '../../users'
 import ListItem from '../ListItem'
 import InputForm from '../InputForm'
 
+
+
+//https://jsonplaceholder.typicode.com/users/
 export default class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listItems: props.listItems,
+      //data: null,
+      listItems: [],
       /*value: '',*/
       /*showForm: true,*/
     };
@@ -20,16 +25,34 @@ export default class TodoList extends Component {
     event.preventDefault();
   };
   */
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users/')
+      .then(response => response.json())
+      /*.then(listItems => this.setState({ listItems }));*/
+      .then(listItems => this.setState({ listItems: listItems.map(listItem => ({id:listItem.id, name: listItem.name, date: new Date()}))}));
+  }
+
   addItem = (value) => {
     const newArr = [...this.state.listItems];
-    newArr.push({id: new Date().valueOf(), name: value });
+    newArr.push({id: new Date().valueOf(), name: value, date: new Date()});
     this.setState({listItems: newArr});
   };
 
   removeItem = (item) => {
-    console.log(item);
     this.setState({listItems: this.state.listItems.filter(el => el.id !== item.id)});
     console.log('---', this.setState);
+  };
+
+  completeItem = (id) => {
+    console.log(id);
+    this.setState({
+      listItems: this.state.listItems.map(el => {
+        if (el.id === id) {
+          return {...el, complete: !el.complete};
+        }
+        return el;
+      })
+    });
   };
 
   /*changeStateForm = () => {
@@ -56,7 +79,8 @@ export default class TodoList extends Component {
         </div>
         <div className = "list">
           {
-            listItems.map(listItem => (<ListItem key={listItem.id} listItem={listItem} onRemove={this.removeItem}/>))
+            /*listItems &&*/
+            listItems.map(listItem => (<ListItem key={listItem.id} listItem={listItem} onRemove={this.removeItem} onClickComplete={this.completeItem}/>))
           }
         </div>
       </div>
