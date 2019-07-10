@@ -17,7 +17,7 @@ export default class InputForm extends Component {
   };
 
   render (){
-    const{ onAdd} = this.props;
+    const{ onAdd } = this.props;
     const{ value } = this.state;
 
     return (

@@ -4,27 +4,19 @@ import ListItem from '../ListItem'
 import InputForm from '../InputForm'
 
 
-
 //https://jsonplaceholder.typicode.com/users/
 export default class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //data: null,
       listItems: [],
+      checkedItems: {},
       /*value: '',*/
       /*showForm: true,*/
     };
     console.log('---', this.state);
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return nextState.value !== this.state.value;
-  // }
-  /*handleSubmit = (event) => {
-    alert('Отправленное имя: ' + this.state.value);
-    event.preventDefault();
-  };
-  */
+
   componentDidMount() {
     fetch('https://jsonplaceholder.typicode.com/users/')
       .then(response => response.json())
@@ -43,15 +35,55 @@ export default class TodoList extends Component {
     console.log('---', this.setState);
   };
 
-  completeItem = (id) => {
-    console.log(id);
+  completeItem = (id, value) => {
+    const checkedCopy = { ...this.state.checkedItems };
+    if (value) {
+      checkedCopy[id] = value;
+    } else {
+      delete checkedCopy[id];
+    }
+    this.setState({ checkedItems: checkedCopy });
+
+    console.log(checkedCopy);
+    // this.setState({
+    //   listItems: this.state.listItems.map(el => {
+    //     if (el.id === id) {
+    //       return {...el, complete: !el.complete};
+    //     }
+    //     return el;
+    //   })
+    // });
+  };
+
+  removeAllCompleteItems = () => {
+    const { checkedItems, listItems } = this.state;
+    console.log('CheckedItems: ', checkedItems);
+    console.log('CheckedItems: ', Object.values(checkedItems));
+    const newListItems = listItems.filter(listItem => {
+      const shouldStay = !checkedItems[listItem.id];
+      return shouldStay
+    });
+
     this.setState({
-      listItems: this.state.listItems.map(el => {
-        if (el.id === id) {
-          return {...el, complete: !el.complete};
-        }
-        return el;
-      })
+      listItems: newListItems,
+      checkedItems: {},
+    })
+  };
+
+  selectAllCompleteItems = () => {
+    const { checkedItems, listItems } = this.state;
+
+
+    const newCompleteListItems = listItems.map(item => {
+      if (checkedItems[item.id]){
+        return {...item, complete: true};
+      }
+      return item;
+    });
+    console.log('CompleteListItems: ', newCompleteListItems);
+    this.setState({
+      listItems: newCompleteListItems,
+      checkedItems: {},
     });
   };
 
@@ -61,7 +93,9 @@ export default class TodoList extends Component {
 
   render() {
     console.log('render');
-    const { listItems /*, showForm */} = this.state;
+    const { listItems, checkedItems/*, showForm */} = this.state;
+    const shownBtn = Object.values(checkedItems);
+
     return (
       <div>
         {/*<button type="button" onClick={this.changeStateForm}>hide form</button>*/}
@@ -80,9 +114,22 @@ export default class TodoList extends Component {
         <div className = "list">
           {
             /*listItems &&*/
-            listItems.map(listItem => (<ListItem key={listItem.id} listItem={listItem} onRemove={this.removeItem} onClickComplete={this.completeItem}/>))
+            listItems.map(listItem => (
+              <ListItem
+                isChecked={checkedItems[listItem.id]}
+                key={listItem.id}
+                listItem={listItem}
+                onRemove={this.removeItem}
+                onClickComplete={this.completeItem}
+              />))
           }
         </div>
+        {!!shownBtn.length &&
+        <div>
+          <button className="btn btn_blue btn_sm" onClick={this.removeAllCompleteItems}>  remove  </button>
+          <button className="btn btn_blue btn_sm" onClick={this.selectAllCompleteItems}>  complete  </button>
+        </div>
+        }
       </div>
     );
   }
