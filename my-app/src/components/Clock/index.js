@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './style.scss';
-import { format, distanceInWordsToNow } from 'date-fns'
+import { distanceInWordsToNow } from 'date-fns'
 
 
 

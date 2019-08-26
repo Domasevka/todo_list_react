@@ -11,7 +11,7 @@
     padding: 0.5rem;
   }
 
-  &__item.complete {
+  &__item.completed {
     & .list__text{
       text-decoration: line-through;
     }
@@ -61,7 +61,7 @@
 
 
 .btn-close {
-  width: 3rem;
+  width: 2rem;
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 1.5px;

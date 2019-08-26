@@ -1,0 +1,23 @@
+.catalogue-list {
+  padding-top: 40px;
+
+  &__item{
+    position: relative;
+  }
+
+  &__link {
+    display: block;
+    background-color: #fff;
+    border: 1px solid #f6f6f6;
+    padding: 5px;
+    margin-bottom: 20px;
+  }
+  &__row {
+    display: block;
+  }
+  &__btn {
+    position: absolute;
+    top:0;
+    right:0;
+  }
+}
